@@ -7,6 +7,7 @@ import { Product } from '../hooks/useProductSlider';
 
 function useBasketballTextures(product: Product) {
   return useMemo(() => {
+    // Reduced resolution for better performance and less lag
     const width = 512;
     const height = 256;
     
@@ -22,20 +23,6 @@ function useBasketballTextures(product: Product) {
 
     if (!aCtx || !bCtx) return { map: new THREE.Texture(), bumpMap: new THREE.Texture(), roughnessMap: new THREE.Texture() };
 
-    // --- PRE-RENDER PEBBLE DOME ---
-    const pebbleSize = 2;
-    const pebbleCanvas = document.createElement('canvas');
-    pebbleCanvas.width = pebbleSize * 2;
-    pebbleCanvas.height = pebbleSize * 2;
-    const pCtx = pebbleCanvas.getContext('2d');
-    if (pCtx) {
-      const grad = pCtx.createRadialGradient(pebbleSize, pebbleSize, 0, pebbleSize, pebbleSize, pebbleSize);
-      grad.addColorStop(0, '#ffffff');
-      grad.addColorStop(1, '#888888');
-      pCtx.fillStyle = grad;
-      pCtx.fillRect(0, 0, pebbleSize * 2, pebbleSize * 2);
-    }
-
     // --- DRAW BASE ---
     const gradient = aCtx.createLinearGradient(0, 0, 0, height);
     gradient.addColorStop(0, product.ballColor);
@@ -47,29 +34,48 @@ function useBasketballTextures(product: Product) {
     bCtx.fillStyle = '#888888';
     bCtx.fillRect(0, 0, width, height);
 
-    // --- ADD LEATHER GRAIN (Micro-pores) ---
-    aCtx.globalAlpha = 0.05;
-    for (let i = 0; i < 1500; i++) {
+    // --- ADD LEATHER GRAIN (Micro-pores) - Optimized ---
+    aCtx.globalAlpha = 0.1;
+    for (let i = 0; i < 2000; i++) {
       const x = Math.random() * width;
       const y = Math.random() * height;
+      const size = Math.random() * 1.5;
       aCtx.fillStyle = '#000000';
-      aCtx.fillRect(x, y, 1, 1);
+      aCtx.beginPath();
+      aCtx.arc(x, y, size, 0, Math.PI * 2);
+      aCtx.fill();
+      
+      bCtx.fillStyle = '#666666';
+      bCtx.beginPath();
+      bCtx.arc(x, y, size, 0, Math.PI * 2);
+      bCtx.fill();
     }
     aCtx.globalAlpha = 1.0;
 
-    // --- DRAW PEBBLES (Tactile Domes) - Optimized with drawImage ---
+    // --- DRAW PEBBLES (Tactile Domes) ---
     const spacing = 6;
     for (let y = 0; y < height; y += spacing) {
       for (let x = 0; x < width; x += spacing) {
-        const jX = (Math.random() - 0.5) * 2;
-        const jY = (Math.random() - 0.5) * 2;
-        
-        // Albedo shadow
-        aCtx.fillStyle = 'rgba(0,0,0,0.1)';
-        aCtx.fillRect(x + jX, y + jY, 1.5, 1.5);
+        const jX = (Math.random() - 0.5) * 3;
+        const jY = (Math.random() - 0.5) * 3;
+        const size = 1.2 + Math.random() * 0.8;
 
-        // Bump dome
-        bCtx.drawImage(pebbleCanvas, x + jX - pebbleSize, y + jY - pebbleSize);
+        aCtx.fillStyle = 'rgba(0,0,0,0.15)';
+        aCtx.beginPath();
+        aCtx.arc(x + jX + 0.5, y + jY + 0.5, size, 0, Math.PI * 2);
+        aCtx.fill();
+
+        const pebbleGrad = bCtx.createRadialGradient(
+          x + jX, y + jY, 0,
+          x + jX, y + jY, size
+        );
+        pebbleGrad.addColorStop(0, '#ffffff');
+        pebbleGrad.addColorStop(1, '#888888');
+        
+        bCtx.fillStyle = pebbleGrad;
+        bCtx.beginPath();
+        bCtx.arc(x + jX, y + jY, size, 0, Math.PI * 2);
+        bCtx.fill();
       }
     }
 

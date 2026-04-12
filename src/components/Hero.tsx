@@ -68,8 +68,8 @@ export default function Hero({ product, currentIndex, totalProducts, direction }
     // 1. Fade out current watermark
     tl.to(watermarkRef.current, {
       opacity: 0,
-      scale: 0.98,
-      duration: 0.2,
+      scale: 0.95,
+      duration: 0.3,
       ease: "power2.in"
     })
     .call(() => {
@@ -80,7 +80,7 @@ export default function Hero({ product, currentIndex, totalProducts, direction }
     .to(watermarkRef.current, {
       scale: 1,
       opacity: 0.07,
-      duration: 0.4,
+      duration: 0.5,
       ease: "expo.out"
     });
 

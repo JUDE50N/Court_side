@@ -108,7 +108,7 @@ export function useProductSlider() {
     setTimeout(() => {
       setIsTransitioning(false);
       setDirection(0);
-    }, 600);
+    }, 1000);
   }, [isTransitioning]);
 
   const prevSlide = useCallback(() => {
@@ -119,7 +119,7 @@ export function useProductSlider() {
     setTimeout(() => {
       setIsTransitioning(false);
       setDirection(0);
-    }, 600);
+    }, 1000);
   }, [isTransitioning]);
 
   return {
