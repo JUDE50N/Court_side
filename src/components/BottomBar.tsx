@@ -19,9 +19,9 @@ export default function BottomBar({ product, onNext, onPrev }: BottomBarProps) {
     gsap.from(barRef.current, {
       y: 40,
       opacity: 0,
-      duration: 1,
+      duration: 0.8,
       ease: "power3.out",
-      delay: 1.2,
+      delay: 0.4,
     });
   }, []);
 
@@ -38,14 +38,21 @@ export default function BottomBar({ product, onNext, onPrev }: BottomBarProps) {
     if (isAdded) return;
     setIsAdded(true);
     
-    // Dispatch custom event for HTML ball animation from the center of the viewport
-    window.dispatchEvent(new CustomEvent('startHtmlBallAnimation', {
-      detail: { 
-        x: window.innerWidth / 2, 
-        y: window.innerHeight / 2,
-        color: product.ballColor 
-      }
-    }));
+    // Read the actual DOM position of the 3D ball
+    const ballElement = document.getElementById('basketball-3d-container');
+    const ballRect = ballElement?.getBoundingClientRect();
+    
+    if (ballRect) {
+      // Dispatch custom event for HTML ball animation from the actual ball position
+      window.dispatchEvent(new CustomEvent('startHtmlBallAnimation', {
+        detail: { 
+          x: ballRect.left + ballRect.width / 2, 
+          y: ballRect.top + ballRect.height / 2,
+          size: ballRect.height * 0.7, // Visual size of the sphere within the container
+          color: product.ballColor 
+        }
+      }));
+    }
 
     gsap.to('.add-to-cart-btn', {
       scale: 0.95,

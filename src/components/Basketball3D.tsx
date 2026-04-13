@@ -159,17 +159,17 @@ const Ball = memo(({ product, isHovered, onHover, meshRef }: { product: Product;
       castShadow
       receiveShadow
     >
-      <sphereGeometry args={[2.3, 64, 64]} />
+      <sphereGeometry args={[2.3, 40, 40]} />
       <meshPhysicalMaterial
         map={texture}
         roughness={0.9}
         metalness={0.0}
         bumpMap={texture}
-        bumpScale={0.4}
+        bumpScale={0.3}
         clearcoat={0.05}
         clearcoatRoughness={0.8}
-        envMapIntensity={1.8}
-        reflectivity={0.2}
+        envMapIntensity={1.5}
+        reflectivity={0.1}
       />
     </mesh>
   );
@@ -198,7 +198,7 @@ export default function Basketball3D({ product }: { product: Product }) {
         <PerspectiveCamera makeDefault position={[0, 0, 10]} />
         
         {/* Environment for realistic reflections and ambient light */}
-        <Environment resolution={256}>
+        <Environment resolution={128}>
           <group rotation={[-Math.PI / 3, 0, 1]}>
             <Lightformer form="circle" intensity={4} rotation-x={Math.PI / 2} position={[0, 5, -9]} scale={[10, 10, 1]} />
             <Lightformer form="rect" intensity={2} position={[10, 2, 1]} scale={[10, 2, 1]} rotation-y={Math.PI / 2} />
@@ -215,9 +215,9 @@ export default function Basketball3D({ product }: { product: Product }) {
           position={[10, 15, 10]} 
           angle={0.15} 
           penumbra={1} 
-          intensity={3} 
+          intensity={2.5} 
           castShadow 
-          shadow-mapSize={[2048, 2048]}
+          shadow-mapSize={[1024, 1024]}
           shadow-bias={-0.0001}
         />
         
@@ -230,12 +230,12 @@ export default function Basketball3D({ product }: { product: Product }) {
         {/* Soft Contact Shadows on the "floor" */}
         <ContactShadows 
           position={[0, -3.5, 0]} 
-          opacity={0.6} 
+          opacity={0.5} 
           scale={10} 
-          blur={2} 
+          blur={2.5} 
           far={4} 
           color="#000000"
-          resolution={256}
+          resolution={128}
         />
         
         <Float speed={1.5} rotationIntensity={0.3} floatIntensity={0.3}>

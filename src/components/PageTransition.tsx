@@ -8,9 +8,9 @@ export default function PageTransition() {
   useGSAP(() => {
     gsap.to(curtainRef.current, {
       yPercent: -100,
-      duration: 1.2,
+      duration: 0.8,
       ease: "expo.inOut",
-      delay: 0.2,
+      delay: 0.1,
     });
   }, []);
 

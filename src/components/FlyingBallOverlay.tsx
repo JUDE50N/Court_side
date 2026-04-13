@@ -2,7 +2,7 @@ import { useState, useEffect, useRef } from 'react';
 import gsap from 'gsap';
 
 export default function FlyingBallOverlay() {
-  const [ball, setBall] = useState<{ x: number; y: number; color: string } | null>(null);
+  const [ball, setBall] = useState<{ x: number; y: number; size: number; color: string } | null>(null);
   const ballRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -31,52 +31,41 @@ export default function FlyingBallOverlay() {
       onComplete: () => setBall(null)
     });
 
-    // 1. Initial "Separation" - shift to the left
-    gsap.set(ballRef.current, { xPercent: -50, yPercent: -50 });
-    
-    tl.to(ballRef.current, {
-      x: -100,
-      y: 40,
-      rotation: -20,
-      duration: 0.5,
-      ease: "back.out(1.7)"
+    // 1. Setup initial state using GSAP's transform management
+    // We use x/y for absolute position and xPercent/yPercent for centering
+    gsap.set(ballRef.current, { 
+      x: startX,
+      y: startY,
+      xPercent: -50, 
+      yPercent: -50,
+      scale: 1,
+      opacity: 1,
+      filter: 'blur(0px)'
     });
 
-    // 2. Main flight to cart with shrinking and spinning
-    const shiftX = startX; // We keep startX and handle the -100 shift via GSAP x/y
-    const shiftY = startY;
-
-    // Recalculate control point based on shifted position (startX - 100, startY + 40)
-    const cpX = (startX - 100 + targetX) / 2 + 150;
-    const cpY = Math.min(startY + 40, targetY) - 250;
-
-    const animationObj = { t: 0 };
-
-    tl.to(animationObj, {
-      t: 1,
-      duration: 1.2,
+    // 2. Straight line flight to cart
+    tl.to(ballRef.current, {
+      x: targetX,
+      y: targetY,
+      // Shrink to exactly 1/2 of the icon size (icon is ~20px, so target ~10px)
+      scale: 10 / ball.size,
+      rotation: 720,
+      duration: 0.6,
       ease: "power2.inOut",
-      onUpdate: () => {
-        if (!ballRef.current) return;
-        const t = animationObj.t;
+      onUpdate: function() {
+        const t = this.progress();
+        // Effects: Motion Blur and Pulsing Glow
+        const blur = Math.sin(t * Math.PI) * 4;
+        const glow = Math.sin(t * Math.PI) * 30;
         
-        // Quadratic Bezier formula from shifted position
-        const x = Math.pow(1 - t, 2) * (startX - 100) + 2 * (1 - t) * t * cpX + Math.pow(t, 2) * targetX;
-        const y = Math.pow(1 - t, 2) * (startY + 40) + 2 * (1 - t) * t * cpY + Math.pow(t, 2) * targetY;
-        
-        gsap.set(ballRef.current, {
-          left: x,
-          top: y,
-          x: 0,
-          y: 0,
-          rotation: -20 + (t * 720),
-          scale: 1 - (t * 0.85),
-          opacity: 1 - (t * 0.7)
-        });
+        if (ballRef.current) {
+          ballRef.current.style.filter = `blur(${blur}px)`;
+          ballRef.current.style.boxShadow = `0 0 ${20 + glow}px ${ball.color}88`;
+        }
 
-        if (t > 0.98) {
+        if (t > 0.95) {
           cartElement.classList.add('scale-150');
-          setTimeout(() => cartElement.classList.remove('scale-150'), 150);
+          setTimeout(() => cartElement.classList.remove('scale-150'), 100);
         }
       }
     });
@@ -88,11 +77,13 @@ export default function FlyingBallOverlay() {
   return (
     <div 
       ref={ballRef}
-      className="fixed w-32 h-32 sm:w-48 sm:h-48 rounded-full z-[9999] pointer-events-none overflow-hidden"
+      className="fixed rounded-full z-[9999] pointer-events-none overflow-hidden"
       style={{ 
+        width: `${ball.size}px`,
+        height: `${ball.size}px`,
         background: `radial-gradient(circle at 35% 35%, ${ball.color} 0%, #000 100%)`,
-        left: `${ball.x}px`,
-        top: `${ball.y}px`,
+        left: 0,
+        top: 0,
         boxShadow: `
           inset -10px -10px 20px rgba(0,0,0,0.8), 
           inset 10px 10px 20px rgba(255,255,255,0.1),

@@ -11,14 +11,14 @@ export default function Preloader() {
 
     tl.to('.preloader-ball', {
       y: -20,
-      repeat: 5,
+      repeat: 2,
       yoyo: true,
-      duration: 0.4,
+      duration: 0.25,
       ease: "power1.inOut"
     })
     .to('.preloader-container', {
       opacity: 0,
-      duration: 0.8,
+      duration: 0.5,
       ease: "power2.inOut"
     });
   }, []);

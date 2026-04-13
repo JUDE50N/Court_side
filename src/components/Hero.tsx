@@ -31,7 +31,7 @@ export default function Hero({ product, currentIndex, totalProducts, direction }
 
   useGSAP(() => {
     // Initial Load Sequence
-    const tl = gsap.timeline({ delay: 0.8 });
+    const tl = gsap.timeline({ delay: 0.4 });
 
     tl.from(promoRef.current, {
       x: -30,
@@ -109,7 +109,7 @@ export default function Hero({ product, currentIndex, totalProducts, direction }
       </div>
 
       {/* 3D Basketball - order-1 on mobile to be above text */}
-      <div ref={ballContainerRef} className="relative z-10 flex items-center justify-center order-1 sm:order-none">
+      <div id="basketball-3d-container" ref={ballContainerRef} className="relative z-10 flex items-center justify-center order-1 sm:order-none">
         <Suspense fallback={<div className="w-[250px] h-[250px] sm:w-[450px] sm:h-[450px] rounded-full bg-orange-accent/10 animate-pulse" />}>
           <Basketball3D product={displayProduct} />
         </Suspense>
