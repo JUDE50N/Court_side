@@ -181,7 +181,7 @@ export default function Basketball3D({ product }: { product: Product }) {
   const meshRef = useRef<THREE.Mesh>(null);
 
   return (
-    <div className="relative w-[240px] h-[240px] sm:w-[600px] sm:h-[600px] z-20 cursor-grab active:cursor-grabbing">
+    <div className="relative w-[60vw] h-[60vw] max-w-[280px] max-h-[280px] sm:w-[45vw] sm:h-[45vw] sm:max-w-[550px] sm:max-h-[550px] z-20 cursor-grab active:cursor-grabbing">
       <Canvas 
         shadows 
         dpr={dpr}

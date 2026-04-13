@@ -27,7 +27,7 @@
   }
 
   .content-container {
-    @apply relative h-full w-full bg-bg-black overflow-hidden flex flex-col;
+    @apply relative h-[100dvh] w-full bg-bg-black overflow-hidden flex flex-col;
   }
 }
 

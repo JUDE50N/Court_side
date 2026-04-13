@@ -91,7 +91,7 @@ export default function Hero({ product, currentIndex, totalProducts, direction }
 
 
   return (
-    <div ref={containerRef} className="relative flex-1 flex flex-col sm:flex-row items-center justify-center overflow-visible px-6 sm:px-0 py-4 sm:py-0">
+    <div ref={containerRef} className="relative flex-1 flex flex-col sm:flex-row items-center justify-center overflow-visible px-6 sm:px-0 py-2 sm:py-0 min-h-0">
       {/* Radial Glow */}
       <div 
         className="radial-glow transition-all duration-700 opacity-50 sm:opacity-100" 

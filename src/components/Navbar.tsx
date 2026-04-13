@@ -21,7 +21,7 @@ export default function Navbar({ accentColor }: NavbarProps) {
   }, []);
 
   return (
-    <nav ref={navRef} className="relative z-50 flex items-center justify-between px-6 sm:px-16 py-4 sm:py-10">
+    <nav ref={navRef} className="relative z-50 flex items-center justify-between px-6 sm:px-16 py-3 sm:py-6">
       {/* Logo */}
       <div className="flex items-center gap-2 sm:gap-3 cursor-pointer group">
         <div 

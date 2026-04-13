@@ -65,7 +65,7 @@ export default function BottomBar({ product, onNext, onPrev }: BottomBarProps) {
   };
 
   return (
-    <div ref={barRef} className="relative z-50 flex flex-col sm:flex-row items-center sm:items-end justify-between px-6 sm:px-16 pb-6 sm:pb-16 pt-4 sm:pt-10 gap-6 sm:gap-12">
+    <div ref={barRef} className="relative z-50 flex flex-col sm:flex-row items-center sm:items-end justify-between px-6 sm:px-16 pb-4 sm:pb-12 pt-2 sm:pt-6 gap-4 sm:gap-12">
       {/* Price & Info */}
       <div className="flex flex-col items-center sm:items-start text-center sm:text-left sm:flex-1">
         <div className="hidden sm:block mb-4">

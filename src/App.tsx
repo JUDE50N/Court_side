@@ -23,7 +23,7 @@ export default function App() {
   } = useProductSlider();
 
   return (
-    <div className="h-screen w-screen relative overflow-hidden font-sans">
+    <div className="h-[100dvh] w-screen relative overflow-hidden font-sans">
       <Preloader />
       
       {/* Outer Orange Frame */}
