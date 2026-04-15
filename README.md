@@ -1,12 +1,16 @@
 <div align="center">
-<img width="1200" height="475" alt="GHBanner" src="https://github.com/user-attachments/assets/0aa67016-6eaf-458a-adb2-6e31a0763ed6" />
+<img width="1920" height="992" alt="Screenshot 2026-04-15 124017" src="https://github.com/user-attachments/assets/353fab21-6d77-47ee-aa36-bd0f6992839f" />
+<img width="1920" height="991" alt="Screenshot 2026-04-15 123935" src="https://github.com/user-attachments/assets/55476bfa-bb9b-4997-9dbd-1f1217b665e9" />
+<img width="1920" height="991" alt="Screenshot 2026-04-15 124000" src="https://github.com/user-attachments/assets/45fd967a-8401-48f4-a4a9-2b81dba5a13c" />
+https://github.com/user-attachments/assets/9345537e-8da9-4656-ac07-6c79f29bbf37
 </div>
 
-# Run and deploy your AI Studio app
+# Run and deploy app
 
 This contains everything you need to run your app locally.
 
-View your app in AI Studio: https://ai.studio/apps/365eb212-a14d-4ad8-be93-048f6241118a
+View app: https://court-side-azure.vercel.app/
+
 
 ## Run Locally
 
@@ -15,6 +19,5 @@ View your app in AI Studio: https://ai.studio/apps/365eb212-a14d-4ad8-be93-048f6
 
 1. Install dependencies:
    `npm install`
-2. Set the `GEMINI_API_KEY` in [.env.local](.env.local) to your Gemini API key
-3. Run the app:
+2. Run the app:
    `npm run dev`
